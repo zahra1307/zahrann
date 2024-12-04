@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IP Address & Hostname Auto</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+        margin-top: 50px;
+      }
+      h1 {
+        color: #333;
+      }
+      .info-box {
+        border: 1px solid #ddd;
+        padding: 20px;
+        margin: 20px;
+        display: inline-block;
+      }
+      #time {
+        font-size: 1.5em;
+        color: #555;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>IP Address, Hostname, and Realtime Time</h1>
+
+    <div class="info-box">
+      <h2>Your IP Address:</h2>
+      <p id="ip">Fetching IP...</p>
+    </div>
+
+    <div class="info-box">
+      <h2>Your Hostname:</h2>
+      <p id="hostname">Fetching Hostname...</p>
+    </div>
+
+    <div class="info-box">
+      <h2>Current Time:</h2>
+      <p id="time">Fetching time...</p>
+    </div>
+
+    <script>
+      // Fetch the public IP address
+      fetch("https://api.ipify.org?format=json")
+        .then((response) => response.json())
+        .then((data) => {
+          document.getElementById("ip").textContent = data.ip;
+        })
+        .catch((error) => {
+          document.getElementById("ip").textContent = "Unable to fetch IP";
+        });
+
+      // Fetch the hostname
+      document.getElementById("hostname").textContent = window.location.hostname;
+
+      // Realtime clock
+      function updateTime() {
+        const now = new Date();
+        document.getElementById("time").textContent = now.toLocaleTimeString();
+      }
+      setInterval(updateTime, 1000); // Update every second
+      updateTime(); // Initial call to display immediately
+    </script>
+  </body>
+</html>
